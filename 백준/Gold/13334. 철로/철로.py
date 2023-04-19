@@ -1,32 +1,42 @@
 import sys
 import heapq
 
-n = int(sys.stdin.readline())
-road_info = []
-for _ in range(n):
-    road = list(map(int, sys.stdin.readline().split()))
-    road_info.append(road)
+input = sys.stdin.readline
 
-d = int(sys.stdin.readline())
-roads = []
-for road in road_info:
-    house, office = road
-    if abs(house - office) <= d:
-        road = sorted(road)
-        roads.append(road)
-roads.sort(key=lambda x:x[1])
+tmp_list_line = []
+list_line = []
+
+num = int(input())
+check_cnt = [0] * num
+
+for _ in range(num):
+    x = list(map(int,input().split()))
+    x.sort()
+    tmp_list_line.append(x)
+
+red_line = int(input())
+
+for i in range(num):
+    if tmp_list_line[i][1] - tmp_list_line[i][0] > red_line:
+        continue
+    list_line.append(tmp_list_line[i])
+
+list_line.sort(key = lambda x : (-x[0]))
+
+stack = []
 
 answer = 0
-heap = []
-for road in roads:
-    if not heap:
-        heapq.heappush(heap, road)
+
+for i in range(len(list_line)):
+    if not stack:
+        heapq.heappush(stack,-1 * list_line[i][1])
     else:
-        while heap[0][0] < road[1] - d:
-            heapq.heappop(heap)
-            if not heap:
+        while stack:
+            if list_line[i][0] + red_line < -1 * stack[0]:
+                heapq.heappop(stack)
+            else:
                 break
-        heapq.heappush(heap, road)
-    answer = max(answer, len(heap))
+        heapq.heappush(stack, -1 * list_line[i][1])
+    answer = max(answer,len(stack))
 
 print(answer)
