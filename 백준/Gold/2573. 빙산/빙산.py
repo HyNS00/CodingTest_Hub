@@ -1,51 +1,65 @@
 import sys
-N, M = map(int, sys.stdin.readline().split())
-iceberg = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-# 빙산 녹이는 함수
-def melting() :
+input = sys.stdin.readline
+
+sys.setrecursionlimit(10**3)
+# 빙산이외에 바다에 해당하는 칸은 0
+# 그 외의 높이는 빙산의 정보
+graph = []
+r,c = map(int,input().split())
+for _ in range(r):
+    a = list(map(int,input().split()))
+    graph.append(a)
+dx =[-1,1,0,0]
+dy =[0,0,-1,1]
+
+
+def melting():
     change = []
-    for i in range(1, N-1) :
-        for j in range(1, M-1) :
-            if iceberg[i][j] != 0 :
-                sea = 0 # 현재 위치에서 0과 맞닿아 있는 개수
-                for k in range(4) :
-                    nx, ny = i + dx[k], j + dy[k]
-                    if 0 <= nx < N and 0 <= ny < M and iceberg[nx][ny] == 0 :
+    for i in range(1,r-1):
+        for j in range(1,c-1):
+            if graph[i][j] != 0:
+                sea = 0
+                for k in range(4):
+                    nx = i+dx[k]
+                    ny = j+dy[k]
+                    if 0 <= nx < r and 0 <= ny < c and graph[nx][ny] == 0:
                         sea += 1
-                if iceberg[i][j] - sea > 0 : # 아직 녹아서 사라지지 않을 경우
-                    iceberg[i][j] = iceberg[i][j] - sea
-                else : # 녹아서 사라질 경우 후에 계산을 위해 나중에 변경
-                    change.append((i, j))
-    for x, y in change : # 사라질 부분 0으로 변경
-        iceberg[x][y] = 0
-# 빙산 덩이리 탐색을 위한 DFS 함수
-def dfs(s, e) :
+
+                if graph[i][j] - sea  > 0:
+                    graph[i][j] = graph[i][j] -sea
+
+                else:
+                    change.append((i,j))
+
+    for x,y in change:
+         graph[x][y] = 0
+
+def dfs(s,e):
     visited[s][e] = 1
-    stack = [(s, e)]
+    stack =[(s,e)]
     while stack :
-        xx, yy = stack.pop()
-        for i in range(4) :
-            nx, ny = xx + dx[i], yy + dy[i]
-            if 0 <= nx < N and 0 <= ny < M and visited[nx][ny] == 0 and iceberg[nx][ny] != 0:
+        xx,yy =stack.pop()
+        for i in range(4):
+            nx = xx+dx[i]
+            ny = yy+ dy[i]
+            if 0 <= nx < r and 0 <= ny < c and visited[nx][ny] == 0 and graph[nx][ny] != 0:
                 visited[nx][ny] = 1
-                stack.append((nx, ny))
-day = 0
+                stack.append((nx,ny))
+
+day =0
 while True :
-    visited = [[0] * M for _ in range(N)]
-    count = 0 # 현재 빙산 덩어리의 개수
-    for i in range(1, N-1) :
-        for j in range(1, M-1) :
-            if iceberg[i][j] != 0 and visited[i][j] == 0:
-                dfs(i, j)
+    visited =[[0] * c for _ in range(r)]
+    count = 0
+    for i in range(1,r-1):
+        for j in range(1,c-1):
+            if graph[i][j] != 0 and visited[i][j] == 0:
+                dfs(i,j)
                 count += 1
-    if count > 1 : # 이미 나눠져 있다면
+    if count > 1:
         print(day)
         break
-    elif count == 0 : # 이미 녹아서 사라졌다면
+    elif count == 0:
         print(0)
         break
-    # 아직 한덩어리라면 더 녹여본다.
     melting()
     day += 1
