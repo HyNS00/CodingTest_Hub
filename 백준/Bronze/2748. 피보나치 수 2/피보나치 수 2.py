@@ -1,25 +1,12 @@
 import sys
-
 input = sys.stdin.readline
+d =[0] * 100
+d[1] = 1
+d[2] = 1
 
 n = int(input())
 
+for i in range(3,n+1):
+    d[i] = d[i-1] + d[i-2]
 
-d =[0] * 100
-
-
-def pibo(x):
-    if x == 1 or x == 2:
-        return 1
-    
-    if d[x] != 0:
-        return d[x]
-    
-
-    d[x] = pibo(x-1) + pibo(x-2)
-
-
-    return d[x]
-
-
-print(pibo(n))
+print(d[n])
