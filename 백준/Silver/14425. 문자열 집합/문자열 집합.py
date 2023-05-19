@@ -1,18 +1,13 @@
 import sys
-
 input = sys.stdin.readline
+
 n,m = map(int,input().split())
-one = []
-two=[]
+dic ={}
 for _ in range(n):
-    one.append(input().strip())
-
+    dic[input().strip()] = 1
+cnt = 0
 for _ in range(m):
-    two.append(input().strip())
-cnt =0
-
-for j in two:
-    if j in one:
+    if input().strip() in dic:
         cnt += 1
 
 print(cnt)
