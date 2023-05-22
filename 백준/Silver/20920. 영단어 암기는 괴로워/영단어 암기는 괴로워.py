@@ -15,7 +15,9 @@ for _ in range(n):
         else : 
             dic[a] = 1
 # 갯수대로 받기
-
+# key = lambda x :  
+# 이 형태에서 key를 꼭 명심해서 사용하자
+# dic.items(), dic.values(), dic.keys()!!
 result = sorted(dic.items(),key = lambda x : (-x[1], -len(x[0]), x[0]))
 
 for i in range(len(result)):
