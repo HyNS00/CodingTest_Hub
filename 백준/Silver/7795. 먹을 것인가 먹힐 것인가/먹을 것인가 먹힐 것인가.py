@@ -4,6 +4,9 @@ input = sys.stdin.readline
 
 
 
+'''
+cnt가 돌면서 cnt값과 같이 시작한다.
+'''
 testcase = int(input())
 for _ in range(testcase):
     n,m = map(int,input().split())
