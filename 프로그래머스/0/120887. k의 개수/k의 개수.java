@@ -7,9 +7,8 @@ class Solution {
             list.add(str);
         }
         String tmp = String.join("",list);
-        String strK = String.valueOf(k);
         int n = tmp.length();
-        int m = tmp.replace(strK,"").length();
+        int m = tmp.replace(String.valueOf(k),"").length();
         return n-m;
         
     }
