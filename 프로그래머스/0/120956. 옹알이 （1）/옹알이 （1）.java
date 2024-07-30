@@ -8,7 +8,7 @@ class Solution {
             for(String word: words){
                 tmp = tmp.replace(word," ");
             }
-            if(tmp.trim().isEmpty()){
+            if(tmp.isBlank()){
                 cnt++;
             }
         }
