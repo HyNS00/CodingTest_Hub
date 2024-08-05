@@ -19,7 +19,13 @@ class Solution {
                 total -= challengers[i];
             }
         }
-        int[] answer = fails.entrySet().stream().sorted((o1,o2) -> Double.compare(o2.getValue(),o1.getValue())).mapToInt(Map.Entry::getKey).toArray();
+        int[] answer = fails.entrySet().stream().sorted((o1,o2) ->{
+		int diff = Double.compare(o2.getValue(), o1.getValue());
+		if(diff != 0){
+			return diff;
+		}
+		return Integer.compare(o1.getKey(), o2.getKey());
+		}).mapToInt(Map.Entry::getKey).toArray();
         return answer;
     }
 }
