@@ -1,16 +1,28 @@
-import java.util.*;
 class Solution {
+    int cnt = 0;
+    
     public int solution(int[] number) {
-        int cnt = 0;
-        for(int i = 0; i < number.length -2; i++){
-            for(int j = i+1; j < number.length -1; j++){
-                for(int p = j+1; p < number.length; p++){
-                    if(number[i]+number[j]+number[p] == 0){
-                        cnt++;
-                    }
+        boolean[] visited = new boolean[number.length];
+        func(number,visited, 0,3);
+        return cnt;
+    }
+    public void func(int[] number, boolean[] visited, int start, int round){
+        if(round == 0){
+            int sum = 0;
+            for(int i = 0; i < number.length; i++){
+                if(visited[i]){
+                    sum += number[i];
                 }
             }
+            if(sum == 0){
+                cnt++;
+            }
+            return;
         }
-        return cnt;
+        for(int i = start; i < number.length; i++){
+            visited[i] = true;
+            func(number,visited,i+1,round-1);
+            visited[i] = false;
+        }
     }
 }
