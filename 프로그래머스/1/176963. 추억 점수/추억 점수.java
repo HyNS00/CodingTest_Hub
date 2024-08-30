@@ -11,8 +11,6 @@ class Solution {
             for(int i = 0; i < str.length; i++){
                 if(score.containsKey(str[i])){
                     sum += score.get(str[i]);
-                }else{
-                    continue;
                 }
             }
             answer.add(sum);
