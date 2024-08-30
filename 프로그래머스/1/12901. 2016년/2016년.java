@@ -10,8 +10,8 @@ class Solution {
         for(int i = 1; i <= a-1; i++){
             day += daysInMonth[i];
         }
-        day += b-1;
+        day += b;
         // 3 + 6 = 9 % 7
-        return week[(day+5)% 7];
+        return week[(day+4)% 7];
     }
 }
