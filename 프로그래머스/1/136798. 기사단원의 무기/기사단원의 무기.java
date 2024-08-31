@@ -2,13 +2,8 @@ import java.util.stream.*;
 class Solution {
     public int solution(int number, int limit, int power) {
         // List<Integer> list = new ArrayList<>();
-        int test= IntStream.rangeClosed(1,number).map(num ->{
-            if(check(num) > limit){
-                return power;
-            }else{
-                return check(num);
-            }
-        }).sum();
+        int test= IntStream.rangeClosed(1,number).map(num -> check(num))
+            .map(over -> over > limit ? power : over).sum();
         return test;
     }
     private int check(int num){
