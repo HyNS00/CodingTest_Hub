@@ -1,14 +1,19 @@
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.*;
+import java.io.*;
 public class Main{
-    public static void main(String[] args){
-        Scanner stdIn = new Scanner(System.in);
-        int a = stdIn.nextInt();
-        String sNum = stdIn.next();
-        char[] cNum = sNum.toCharArray();
-        int sum = 0;
-        for(int i = 0; i < cNum.length; i++){
-            sum += cNum[i] - '0';
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        String N = br.readLine();
+        String M = br.readLine();
+        int answer = 0;
+        for(String str : M.split("")){
+            answer += Integer.parseInt(str);
         }
-        System.out.print(sum);
+        bw.write(String.valueOf(answer)+"\n");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
