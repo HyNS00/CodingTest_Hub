@@ -7,7 +7,7 @@ class Solution {
             boolean[] visited = new boolean[numbers.length()];
             permutation(visited, 0, i, "", numbers);
         }
-        int answer = (int) set.stream().filter(x -> check(x))
+        int answer = (int) set.stream().filter(this::check)
             .count();
         return answer;
     }
