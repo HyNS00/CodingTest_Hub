@@ -21,7 +21,7 @@ public class Main {
         for(int i = 0; i <= N; i++){
             list.add(new ArrayList<>());
         }
-
+        // 사이즈를 이미 7까지 받아버림 0 ~ 6 == 7 
         for(int i = 0; i < M; i++){
             st = new StringTokenizer(br.readLine());
 
@@ -37,7 +37,7 @@ public class Main {
         ArrayDeque<Integer> stack = new ArrayDeque<>();
         int cnt = 0;
 
-        for(int i = 1; i < list.size(); i++){
+        for(int i = 1; i <= N; i++){
             if(!visited[i]){
                 cnt++;
 
