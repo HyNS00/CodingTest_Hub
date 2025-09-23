@@ -38,11 +38,10 @@ public class Main {
         }
 
         for(int i = startIdx; i < arr.length; i++) {
-            if(!list.isEmpty() && list.get(list.size()-1) <= arr[i]) {
-                list.add(arr[i]);
-                maker(depth + 1, list, arr, m, startIdx);
-                list.remove(list.size() - 1);
-            }
+            list.add(arr[i]);
+            maker(depth + 1, list, arr, m, i);
+            list.remove(list.size() - 1);
+            // 시작점을 넘기자
         }
 
     }
