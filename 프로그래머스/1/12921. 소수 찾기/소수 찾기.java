@@ -1,29 +1,19 @@
 import java.util.*;
 class Solution {
-    private static List<Integer> list = new ArrayList<>();
     public int solution(int n) {
-        for(int i = 1; i <= n; i++){
-            check(i);
+        int cnt = 1;
+        for(int i = 3; i <= n; i++) {
+            
+            if(checker(i)) cnt++;
         }
-        return list.size();
+        return cnt;
     }
-    private void check(int n){
-        if(n < 2) return;
-        if(n == 2) {
-            list.add(2);
-            return;
+    public boolean checker(int target) {
+        if(target % 2 == 0) return false;
+        
+        for(int i = 3; i <= Math.sqrt(target); i+=2) {
+            if(target % i == 0) return false;
         }
-        if(n % 2 == 0) return;
-        boolean flag = true;
-        for(int i = 3; i * i <= n; i+=2){
-            if(n % i == 0){
-                flag = false;
-                break;
-            }
-        }
-        if(flag){
-            list.add(n);
-        }
+        return true;
     }
-    
 }
