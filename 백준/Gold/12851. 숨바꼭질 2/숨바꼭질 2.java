@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.util.ArrayDeque;
 import java.util.StringTokenizer;
@@ -37,7 +35,7 @@ public class Main {
                 }
                 continue;
             }
-            
+
 
             int[] jump = {curr +1, curr -1, curr * 2};
 
