@@ -27,7 +27,9 @@ public class Main {
 
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
-                dfs(i, j, map[i][j]);
+                if(keep[i][j] == 0) {
+                    dfs(i, j, map[i][j]);
+                }
             }
         }
 
