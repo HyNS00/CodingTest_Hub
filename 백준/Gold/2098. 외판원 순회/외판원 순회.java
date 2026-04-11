@@ -1,56 +1,50 @@
+
 import java.io.*;
 import java.util.Arrays;
 
 public class Main {
-    static int[][] w;
-    static int INF = 987_654_321;
+    static int INF = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int n = Integer.parseInt(br.readLine());
-        w = new int[n][n];
-
-
-        for(int i = 0; i < n; i++) {
+        int N = Integer.parseInt(br.readLine());
+        int[][] w = new int[N][N];
+        for(int i = 0; i < N; i++) {
             w[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         }
 
-
-        // dp [방문한 곳][현재 위치]
-        int[][] dp = new int[1 << n][n];
+        int[][] dp = new int[1 << N][N];
         for(int[] row : dp) {
-            Arrays.fill(row,INF);
+            Arrays.fill(row, INF);
         }
-
+        int fullVisited = (1 << N) -1;
         dp[1][0] = 0;
-        int fullVisited = (1 << n) -1;
-        for(int i = 1; i <= fullVisited; i++) {
-            for(int j = 0; j < n; j++) {
-                // 현재 어디까지 방문했고 어디에 있는지
-                if(dp[i][j] == INF) continue;
+        for(int v = 1; v <= fullVisited; v++) {
+            for(int curr = 0; curr < N; curr++) {
+                if(dp[v][curr] == INF) continue; // v curr이 INF면 도달할 수 없다는 의미
 
-                for(int next = 0; next < n; next++) {
-                    // 다음은 어디로 갈지
+                for(int next = 0; next < N; next++) {
+                    if((v & (1 << next)) != 0) continue;
+                    if(w[curr][next] == 0) continue;
 
-                    if((i & (1 << next))!= 0) continue; // 이미 방문했을 경우
-                    // 방문을 했다면 0이 아닌값이 나옴, 방문안했으면 0이 나옴
-                    if(w[j][next] == 0) continue; // 가는 길이 없으면 넘긴다.
-
-                    int nextValue = i | (1 << next);
-                    dp[nextValue][next] = Math.min(dp[nextValue][next], dp[i][j] + w[j][next]);
+                    int nextValue = v | (1 << next);
+                    dp[nextValue][next] = Math.min(dp[nextValue][next], dp[v][curr] + w[curr][next]);
                 }
             }
         }
-        int ans = INF;
-        for(int i = 1; i < n; i++) {
-            if(w[i][0] == 0)  continue;
 
+        int ans = INF;
+        // List , Array에 담아두고 비교해도 되는데 그냥 전체적ㅇ로 비교해도 문제 x
+        // 마지막 위치에서 모두 방문하고 0으로 돌아오는 값 계산
+        for (int i = 1; i < N; i++) {
+            if(w[i][0] == 0) continue;
+            if(dp[fullVisited][i] == INF) continue;
             ans = Math.min(ans, dp[fullVisited][i] + w[i][0]);
         }
         bw.write(String.valueOf(ans));
         bw.close();
         br.close();
-    }
 
+    }
 }
