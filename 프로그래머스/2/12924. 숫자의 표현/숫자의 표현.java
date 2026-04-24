@@ -1,19 +1,24 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
-        // 연속
-        for(int i = 1; i <= n; i++){
-            int sum =0;
-            for(int j = i; j <= n; j++){
-                sum += j;
-                if(sum == n){
-                    answer++;
-                }
-                if(sum > n){
-                    break;
-                }
+        int cnt = 0;
+        int start = 1;
+        int end = 1;
+        int sum = 1;
+        
+        while(start <= n) {
+            if(sum == n) {
+                cnt++;
+                sum -= start;
+                start++;
+            }else if(sum > n) {
+                sum -= start;
+                start++;
+                
+            }else {
+                end++;
+                sum += end;
             }
         }
-        return answer;
+        return cnt;
     }
 }
