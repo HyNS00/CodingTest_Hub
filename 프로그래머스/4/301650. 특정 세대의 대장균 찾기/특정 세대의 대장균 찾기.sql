@@ -1,0 +1,13 @@
+-- 코드를 작성해주세요
+
+-- 2세대 테이블 만들기
+WITH SEC AS (
+    SELECT e.ID 
+    FROM ECOLI_DATA e
+    JOIN ECOLI_DATA c ON c.PARENT_ID IS NULL AND e.PARENT_ID = c.ID
+)
+
+SELECT o.ID 
+FROM ECOLI_DATA o
+JOIN SEC sec ON o.PARENT_ID = sec.ID
+ORDER BY o.ID;
